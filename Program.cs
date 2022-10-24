@@ -16,8 +16,6 @@ M.SaveLog();
 Console.WriteLine("\nPress any key to continue.");
 Console.Read();
 M.Del();
-
-
 class My_Copy
 {
     public string log;
@@ -83,7 +81,6 @@ class My_Copy
     {
         Directory.CreateDirectory(pathSource + "\\Log");
         File.Create(pathSource + "\\Log" + "\\Log.txt");
-        
     }
     public async void SaveLog()
     {
@@ -99,7 +96,6 @@ class My_Copy
         Del();
     }
 }
-
 class Settings_Folder
 {
     public string Source { get; set; }
