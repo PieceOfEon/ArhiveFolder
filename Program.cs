@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.IO.Compression;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
 
@@ -11,7 +12,7 @@ M.CopyFiles();
 M.ArchiveFiles();
 Console.WriteLine("SourcePath: " + M.pathSource + "\nTargetPath: " + M.pathTarget);
 Console.WriteLine(M.log);
-//M.CreateLogFolder();
+M.CreateLogFolder();
 M.SaveLog();
 Console.WriteLine("\nPress any key to continue.");
 Console.Read();
@@ -80,11 +81,18 @@ class My_Copy
     public void CreateLogFolder()
     {
         Directory.CreateDirectory(pathSource + "\\Log");
-        File.Create(pathSource + "\\Log" + "\\Log.txt");
+        //File.Create(pathSource + "\\Log" + "\\Log.txt");
     }
-    public async void SaveLog()
+    public void SaveLog()
     {
-        await File.AppendAllTextAsync(pathSource + "\\Log" + "\\Log.txt",log);
+        try
+        {
+            StreamWriter sw = new StreamWriter(File.Open(pathSource + "\\Log\\Log.txt", FileMode.Append)); // эта запись в файл не глючит + создает файл, если нужно
+            sw.WriteLine(log);
+            sw.Close();
+        }
+        catch (Exception e) { Console.WriteLine(e.Message); }
+
     }
     public void Del()
     {
